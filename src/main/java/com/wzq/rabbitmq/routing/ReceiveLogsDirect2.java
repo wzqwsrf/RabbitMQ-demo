@@ -27,15 +27,16 @@ public class ReceiveLogsDirect2 {
 
         String queueName = channel.queueDeclare().getQueue();
 
-        for (String severity: routingKeys){
+        for (String severity : routingKeys) {
             channel.queueBind(queueName, EXCHANGE_NAME, severity);
         }
 
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
-        Consumer consumer = new DefaultConsumer(channel){
+        Consumer consumer = new DefaultConsumer(channel) {
             @Override
-            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+            public void handleDelivery(String consumerTag, Envelope envelope,
+                                       AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
                 System.out.println(" [x] Received '" + envelope.getRoutingKey() + "':'" + message + "'");
             }

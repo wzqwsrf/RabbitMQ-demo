@@ -23,14 +23,15 @@ public class Worker2 {
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
         channel.basicQos(1);
-        Consumer consumer = new DefaultConsumer(channel){
+        Consumer consumer = new DefaultConsumer(channel) {
             @Override
-            public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
+            public void handleDelivery(String consumerTag, Envelope envelope,
+                                       AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
                 System.out.println("Worker2 Received '" + message + "'");
                 try {
                     doWork();
-                }finally {
+                } finally {
                     System.out.println("Worker2 [x] Done");
                     channel.basicAck(envelope.getDeliveryTag(), false);
                 }

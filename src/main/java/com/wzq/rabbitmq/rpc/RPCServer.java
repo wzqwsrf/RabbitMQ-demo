@@ -41,7 +41,8 @@ public class RPCServer {
             String response = fib(n) + "";
             System.out.println(response);
             System.out.println(props.getReplyTo());
-            channel.basicPublish("", props.getReplyTo(), (AMQP.BasicProperties) replyProps, response.getBytes());
+            channel.basicPublish("", props.getReplyTo(),
+                    (AMQP.BasicProperties) replyProps, response.getBytes());
             channel.basicAck(delivery.getEnvelope().getDeliveryTag(), false);
         }
     }

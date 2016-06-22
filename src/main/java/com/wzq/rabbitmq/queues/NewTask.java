@@ -23,7 +23,8 @@ public class NewTask {
 
         for (int i = 0; i < 10; i++) {
             String message = "Hello World " + i;
-            channel.basicPublish("", TASK_QUEUE_NAME, MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
+            channel.basicPublish("", TASK_QUEUE_NAME,
+                    MessageProperties.PERSISTENT_TEXT_PLAIN, message.getBytes());
             System.out.println(" [x] Sent '" + message + "'");
         }
         channel.close();

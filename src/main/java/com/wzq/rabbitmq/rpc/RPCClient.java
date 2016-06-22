@@ -33,8 +33,10 @@ public class RPCClient {
     public String call(String message) throws IOException, InterruptedException {
         String response;
         String corrId = UUID.randomUUID().toString();
-        BasicProperties properties = new AMQP.BasicProperties.Builder().correlationId(corrId).replyTo(replyQueueName).build();
-        channel.basicPublish("", requestQueueName, (AMQP.BasicProperties) properties, message.getBytes());
+        BasicProperties properties = new AMQP.BasicProperties.
+                Builder().correlationId(corrId).replyTo(replyQueueName).build();
+        channel.basicPublish("", requestQueueName,
+                (AMQP.BasicProperties) properties, message.getBytes());
         System.out.println(properties.getReplyTo());
         while (true) {
             QueueingConsumer.Delivery delivery = consumer.nextDelivery();
